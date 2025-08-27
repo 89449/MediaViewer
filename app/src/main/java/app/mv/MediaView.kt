@@ -100,6 +100,7 @@ fun MediaView(
         state = pagerState
     ) { page ->
         val mediaItem = mediaItems[page]
+		val isCurrentPage = pagerState.currentPage == page
         
         Box(
             modifier = Modifier
@@ -125,7 +126,8 @@ fun MediaView(
                 VideoPlayer(
 	                mediaUri = mediaItem.uri,
 	                isPlaying = isPlaying,
-	                onPlayPause = { isPlaying = !isPlaying }
+	                onPlayPause = { isPlaying = !isPlaying },
+					isCurrentPage = isCurrentPage
                 )
             }
         }
