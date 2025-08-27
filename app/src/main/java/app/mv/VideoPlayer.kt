@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.platform.LocalView
 
 @Composable
-fun VideoPlayer(mediaUri: Uri, isPlaying: Boolean, onPlayPause: () -> Unit) {
+fun VideoPlayer(mediaUri: Uri, isPlaying: Boolean, onPlayPause: () -> Unit, isCurrentPage: Boolean) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     
@@ -36,8 +36,8 @@ fun VideoPlayer(mediaUri: Uri, isPlaying: Boolean, onPlayPause: () -> Unit) {
         exoPlayer.playWhenReady = true 
     }
     
-    LaunchedEffect(isPlaying) {
-        if (isPlaying) {
+    LaunchedEffect(isCurrentPage, isPlaying) {
+        if (isCurrentPage && isPlaying) {
             exoPlayer.play()
         } else {
             exoPlayer.pause()
