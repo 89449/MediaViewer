@@ -33,7 +33,6 @@ fun VideoPlayer(mediaUri: Uri, isPlaying: Boolean, onPlayPause: () -> Unit, isCu
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.repeatMode = Player.REPEAT_MODE_ALL
         exoPlayer.prepare()
-        exoPlayer.playWhenReady = true 
     }
     
     LaunchedEffect(isCurrentPage, isPlaying) {
