@@ -22,7 +22,7 @@ import coil.compose.AsyncImage
 
 import app.mv.data.MediaItem
 import app.mv.data.getMediaItemsForFolder
-import app.mvutil.formatDuration
+import app.mv.util.formatDuration
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
