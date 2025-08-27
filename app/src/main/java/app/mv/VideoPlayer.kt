@@ -31,7 +31,7 @@ fun VideoPlayer(mediaUri: Uri, isPlaying: Boolean, onPlayPause: () -> Unit) {
     LaunchedEffect(mediaUri) {
         val mediaItem = MediaItem.fromUri(mediaUri)
         exoPlayer.setMediaItem(mediaItem)
-        repeatMode = Player.REPEAT_MODE_ALL
+        exoPlayer.repeatMode = Player.REPEAT_MODE_ALL
         exoPlayer.prepare()
         exoPlayer.playWhenReady = true 
     }
