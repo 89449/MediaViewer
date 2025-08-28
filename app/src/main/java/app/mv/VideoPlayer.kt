@@ -18,11 +18,15 @@ import androidx.media3.ui.AspectRatioFrameLayout
 import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun VideoPlayer(mediaUri: Uri, isPlaying: Boolean, onPlayPause: () -> Unit, isCurrentPage: Boolean) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    var wasPlayingBeforePause by remember { mutableStateOf(false) }
     
     val exoPlayer = remember {
         ExoPlayer.Builder(context).build()
@@ -46,9 +50,18 @@ fun VideoPlayer(mediaUri: Uri, isPlaying: Boolean, onPlayPause: () -> Unit, isCu
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
-                Lifecycle.Event.ON_RESUME -> exoPlayer.play()
-                Lifecycle.Event.ON_PAUSE -> exoPlayer.pause()
-                Lifecycle.Event.ON_DESTROY -> exoPlayer.release()
+                Lifecycle.Event.ON_RESUME -> {
+                    if(wasPlayingBeforePause) {
+                        exoPlayer.play()
+                    }
+                }
+                Lifecycle.Event.ON_PAUSE -> {
+                    wasPlayingBeforePause = exoPlayer.isPlaying
+                    exoPlayer.pause()
+                }
+                Lifecycle.Event.ON_DESTROY -> {
+                    exoPlayer.release()
+                }
                 else -> Unit
             }
         }
